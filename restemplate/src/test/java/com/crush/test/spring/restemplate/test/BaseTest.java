@@ -1,11 +1,22 @@
 package com.crush.test.spring.restemplate.test;
 
+import com.crush.test.spring.restemplate.ClientHttpRequestInterceptorImpl;
+
+import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.http.client.ClientHttpRequestInterceptor;
+import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.xml.Jaxb2RootElementHttpMessageConverter;
+import org.springframework.http.converter.xml.MappingJackson2XmlHttpMessageConverter;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -31,6 +42,17 @@ public class BaseTest {
     protected int port;
     protected String baseUrl(){
         return "http://localhost:"+port;
+    }
+    @Before
+    public void init(){
+        List<ClientHttpRequestInterceptor> interceptors = new ArrayList<>();
+        interceptors.add(new ClientHttpRequestInterceptorImpl());
+        testRestTemplate.getRestTemplate().getInterceptors().addAll(interceptors);
+        List<HttpMessageConverter<?>> list=testRestTemplate.getRestTemplate().getMessageConverters();
+        list=list.stream().filter(e-> !e.getClass().equals(MappingJackson2XmlHttpMessageConverter.class)).collect(Collectors.toList());
+        list.add(new Jaxb2RootElementHttpMessageConverter());
+        testRestTemplate.getRestTemplate().setMessageConverters(list);
+        //默认需要注册使用jaxb的AnnotationIntrospector才能生效 https://github.com/FasterXML/jackson-module-jaxb-annotations
     }
     @Autowired
     protected TestRestTemplate testRestTemplate;

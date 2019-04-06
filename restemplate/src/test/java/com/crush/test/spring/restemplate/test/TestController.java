@@ -3,9 +3,10 @@ package com.crush.test.spring.restemplate.test;
 import com.crush.test.spring.restemplate.PostFormDomain;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -17,6 +18,7 @@ import org.springframework.util.MultiValueMap;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -41,10 +43,6 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 public class TestController extends BaseTest {
-    @Before
-    public void init(){
-
-    }
     @Test
     public void get(){
         String name="123";
@@ -169,7 +167,7 @@ public class TestController extends BaseTest {
         HttpEntity<MultiValueMap<String,String>> requestEntity = new HttpEntity<>(map, headers);
 
 
-        ResponseEntity<PostFormDomain> result=testRestTemplate.postForEntity(url,requestEntity,PostFormDomain.class,map);
+        ResponseEntity<PostFormDomain> result=testRestTemplate.postForEntity(url,requestEntity,PostFormDomain.class);
         Assert.assertTrue(result.getBody().equals(postFormDomain));
     }
     @Test
@@ -196,7 +194,79 @@ public class TestController extends BaseTest {
         HttpEntity<MultiValueMap<String,String>> requestEntity = new HttpEntity<>(map, headers);
 
 
-        ResponseEntity<PostFormDomain> result=testRestTemplate.postForEntity(url,requestEntity,PostFormDomain.class,map);
+        ResponseEntity<PostFormDomain> result=testRestTemplate.postForEntity(url,requestEntity,PostFormDomain.class);
         Assert.assertTrue(result.getBody().equals(postFormDomain));
+    }
+    @Test
+    public void postJson() throws JsonProcessingException {
+        String name="123";
+        String desc="desc";
+        String url=baseUrl()+"/test/restemplate/post/json";
+
+        PostFormDomain postFormDomain=new PostFormDomain();
+        postFormDomain.setName(name);
+        postFormDomain.setDesc(desc);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
+
+        HttpEntity<PostFormDomain> requestEntity = new HttpEntity<>(postFormDomain, headers);
+
+        ResponseEntity<PostFormDomain> result=testRestTemplate.postForEntity(url,requestEntity,PostFormDomain.class);
+        log.info(new ObjectMapper().writeValueAsString(result.getBody()));
+        Assert.assertTrue(result.getBody().equals(postFormDomain));
+    }
+    @Test
+    public void postXml() throws JsonProcessingException {
+        String name="123";
+        String desc="desc";
+        String url=baseUrl()+"/test/restemplate/post/xml";
+
+        PostFormDomain postFormDomain=new PostFormDomain();
+        postFormDomain.setName(name);
+        postFormDomain.setDesc(desc);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_XML);
+
+        HttpEntity<PostFormDomain> requestEntity = new HttpEntity<>(postFormDomain, headers);
+
+        ResponseEntity<PostFormDomain> result=testRestTemplate.postForEntity(url,requestEntity,PostFormDomain.class);
+        log.info(new ObjectMapper().writeValueAsString(result.getBody()));
+        Assert.assertTrue(result.getBody().equals(postFormDomain));
+    }
+    @Test
+    public void postXmlStr() throws JsonProcessingException {
+        String name="123";
+        String desc="desc";
+        String url=baseUrl()+"/test/restemplate/post/xml/str";
+
+        PostFormDomain postFormDomain=new PostFormDomain();
+        postFormDomain.setName(name);
+        postFormDomain.setDesc(desc);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_XML);
+        headers.setAccept(new ArrayList<MediaType>(){
+            { add(MediaType.APPLICATION_XML);}
+        });
+
+        HttpEntity<PostFormDomain> requestEntity = new HttpEntity<>(postFormDomain, headers);
+
+        ResponseEntity<PostFormDomain> result=testRestTemplate.postForEntity(url,requestEntity,PostFormDomain.class);
+        log.info(new ObjectMapper().writeValueAsString(result.getBody()));
+        Assert.assertTrue(result.getBody().equals(postFormDomain));
+    }
+    @Test
+    public void test1() throws JsonProcessingException {
+        String name="123";
+        String desc="desc";
+        String url=baseUrl()+"/test/restemplate/post/xml/str";
+
+        PostFormDomain postFormDomain=new PostFormDomain();
+        postFormDomain.setName(name);
+        postFormDomain.setDesc(desc);
+
+        log.info(new XmlMapper().configure(SerializationFeature.WRAP_ROOT_VALUE,true).writeValueAsString(postFormDomain));
     }
 }

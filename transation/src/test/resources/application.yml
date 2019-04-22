@@ -1,0 +1,38 @@
+server:
+  port: 8899
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driverClassName: com.mysql.jdbc.Driver
+    druid:
+      username: root
+      driverClassName: com.mysql.jdbc.Driver
+      password: 123456
+      url: jdbc:mysql://localhost:3306/test?autoReconnect=true&useSSL=false&useAffectedRows=true&serverTimezone=Asia/Shanghai
+      type: com.alibaba.druid.pool.DruidDataSource
+      initial-size: 10
+      min-idle: 10
+      max-active : 50
+      max-wait: 60000
+      test-while-idle : true
+      test-on-borrow : false
+      test-on-return : false
+      log-slow-sql: true
+      show-sql: true
+      validation-query: select 1
+
+mybatis:
+  type-aliases-package: com.crush.test.spring.transaction.domain
+  mapper-locations: classpath:mappers/*.xml
+  check-config-location: false
+  configuration:
+    cache-enabled: false
+    lazy-loading-enabled: false
+
+#https://github.com/abel533/Mapper/tree/master/wiki/mapper3
+mapper:
+  mappers:
+    - com.crush.test.spring.transaction.BaseMapper
+  not-empty: true
+  identity: MYSQL
+

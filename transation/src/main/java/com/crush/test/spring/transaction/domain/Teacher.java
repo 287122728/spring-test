@@ -1,4 +1,4 @@
-package com.crush.test.spring.transaction;
+package com.crush.test.spring.transaction.domain;
 
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
@@ -24,9 +24,9 @@ import lombok.Data;
  * @author crush_lee
  * @date 2019/4/3
  */
+@Table(name = "transaction_teacher")
 @Data
-@Table(name = "transaction_user")
-public class TransactionUser {
+public class Teacher {
     @Id
     @Column(name = "id")
     @GeneratedValue(generator = "JDBC")

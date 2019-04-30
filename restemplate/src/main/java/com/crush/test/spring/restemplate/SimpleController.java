@@ -1,6 +1,5 @@
 package com.crush.test.spring.restemplate;
 
-import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -49,13 +48,16 @@ public class SimpleController {
     public PostFormDomain postJson(@RequestBody  PostFormDomain postFormDomain){
         return postFormDomain;
     }
-    @RequestMapping(value = "/post/xml",method = RequestMethod.POST)
+    @RequestMapping(value = "/post/xml/resp/xml",method = RequestMethod.POST,produces = "application/xml")
     public PostFormDomain postXml(@RequestBody  PostFormDomain postFormDomain){
+        return postFormDomain;
+    }
+    @RequestMapping(value = "/post/xml/resp/json",method = RequestMethod.POST)
+    public PostFormDomain postXmlAndRespJson(@RequestBody  PostFormDomain postFormDomain){
         return postFormDomain;
     }
     @RequestMapping(value = "/post/xml/str",method = RequestMethod.POST,consumes = "application/xml",produces = "application/xml")
     public String postXmlStr(@RequestBody String xml) throws IOException {
-        XmlMapper mapper=new XmlMapper();
         return xml;
     }
 }

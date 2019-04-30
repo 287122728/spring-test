@@ -3,8 +3,6 @@ package com.crush.test.spring.restemplate.test;
 import com.crush.test.spring.restemplate.PostFormDomain;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -217,10 +215,29 @@ public class TestController extends BaseTest {
         Assert.assertTrue(result.getBody().equals(postFormDomain));
     }
     @Test
-    public void postXml() throws JsonProcessingException {
+    public void postXmlAndRespJson() throws JsonProcessingException {
         String name="123";
         String desc="desc";
-        String url=baseUrl()+"/test/restemplate/post/xml";
+        String url=baseUrl()+"/test/restemplate/post/xml/resp/json";
+
+        PostFormDomain postFormDomain=new PostFormDomain();
+        postFormDomain.setName(name);
+        postFormDomain.setDesc(desc);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_XML);
+
+        HttpEntity<PostFormDomain> requestEntity = new HttpEntity<>(postFormDomain, headers);
+
+        ResponseEntity<PostFormDomain> result=testRestTemplate.postForEntity(url,requestEntity,PostFormDomain.class);
+        log.info(new ObjectMapper().writeValueAsString(result.getBody()));
+        Assert.assertTrue(result.getBody().equals(postFormDomain));
+    }
+    @Test
+    public void postXmlAndRespXml() throws JsonProcessingException {
+        String name="123";
+        String desc="desc";
+        String url=baseUrl()+"/test/restemplate/post/xml/resp/xml";
 
         PostFormDomain postFormDomain=new PostFormDomain();
         postFormDomain.setName(name);
@@ -248,6 +265,7 @@ public class TestController extends BaseTest {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_XML);
         headers.setAccept(new ArrayList<MediaType>(){
+            //如果produces 没有配置，需要添加accept，避免无法解析，使用其他的message converter处理
             { add(MediaType.APPLICATION_XML);}
         });
 
@@ -267,6 +285,6 @@ public class TestController extends BaseTest {
         postFormDomain.setName(name);
         postFormDomain.setDesc(desc);
 
-        log.info(new XmlMapper().configure(SerializationFeature.WRAP_ROOT_VALUE,true).writeValueAsString(postFormDomain));
+        //log.info(new XmlMapper().configure(SerializationFeature.WRAP_ROOT_VALUE,true).writeValueAsString(postFormDomain));
     }
 }

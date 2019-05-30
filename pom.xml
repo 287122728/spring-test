@@ -23,6 +23,7 @@
     <modules>
         <module>transation</module>
         <module>restemplate</module>
+        <module>mvc</module>
     </modules>
     <dependencyManagement>
         <dependencies>

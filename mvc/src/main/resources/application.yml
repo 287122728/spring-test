@@ -1,0 +1,6 @@
+server:
+  port: 9000
+#spring:
+# mvc:
+#  static-path-pattern: /public
+    # 默认值为 classpath:/META-INF/resources/,classpath:/resources/,classpath:/public/,classpath:/public/

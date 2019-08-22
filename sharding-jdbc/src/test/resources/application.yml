@@ -1,0 +1,17 @@
+server:
+  port: 8899
+mybatis:
+  type-aliases-package: com.crush.test.spring.sharding.jdbc.domain
+  mapper-locations: classpath:mappers/*.xml
+  check-config-location: false
+  configuration:
+    cache-enabled: false
+    lazy-loading-enabled: false
+
+#https://github.com/abel533/Mapper/tree/master/wiki/mapper3
+mapper:
+  mappers:
+    - com.crush.test.spring.sharding.jdbc.BaseMapper
+  not-empty: true
+  identity: MYSQL
+

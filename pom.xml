@@ -24,6 +24,7 @@
         <module>transation</module>
         <module>restemplate</module>
         <module>mvc</module>
+        <module>sharding-jdbc</module>
     </modules>
     <dependencyManagement>
         <dependencies>
@@ -68,6 +69,18 @@
                 <artifactId>druid-spring-boot-starter</artifactId>
                 <version>${druid.version}</version>
             </dependency>
+            <!-- sharding-->
+            <dependency>
+                <groupId>io.shardingsphere</groupId>
+                <artifactId>sharding-jdbc-core</artifactId>
+                <version>3.1.0</version>
+            </dependency>
+            <dependency>
+                <groupId>io.shardingsphere</groupId>
+                <artifactId>sharding-jdbc-spring-boot-starter</artifactId>
+                <version>3.1.0</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 

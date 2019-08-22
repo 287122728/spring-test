@@ -48,6 +48,10 @@ public class SimpleController {
     public PostFormDomain postJson(@RequestBody  PostFormDomain postFormDomain){
         return postFormDomain;
     }
+    @RequestMapping(value = "/get/json",method = RequestMethod.GET)
+    public PostFormDomain getJson(PostFormDomain postFormDomain){
+        return postFormDomain;
+    }
     @RequestMapping(value = "/post/xml/resp/xml",method = RequestMethod.POST,produces = "application/xml")
     public PostFormDomain postXml(@RequestBody  PostFormDomain postFormDomain){
         return postFormDomain;

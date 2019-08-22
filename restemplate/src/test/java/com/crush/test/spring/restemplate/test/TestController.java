@@ -215,6 +215,24 @@ public class TestController extends BaseTest {
         Assert.assertTrue(result.getBody().equals(postFormDomain));
     }
     @Test
+    public void getJson() throws JsonProcessingException {
+        String name="123";
+        String desc="desc";
+        String url=baseUrl()+"/test/restemplate/get/json";
+
+        PostFormDomain postFormDomain=new PostFormDomain();
+        postFormDomain.setName(name);
+        postFormDomain.setDesc(desc);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
+
+
+        ResponseEntity<PostFormDomain> result=testRestTemplate.getForEntity(url,PostFormDomain.class);
+        log.info(new ObjectMapper().writeValueAsString(result.getBody()));
+        Assert.assertTrue(result.getBody().equals(postFormDomain));
+    }
+    @Test
     public void postXmlAndRespJson() throws JsonProcessingException {
         String name="123";
         String desc="desc";

@@ -22,8 +22,16 @@ public class ShardingDomainTest extends BaseTest {
         for(int i=0;i<10;i++){
             ShardingDomain shardingDomain=new ShardingDomain();
             shardingDomain.setBizId(i);
+            shardingDomain.setGroupId(i%2);
             shardingDomain.setContent(""+System.currentTimeMillis());
             shardingDomainService.insert(shardingDomain);
         }
+    }
+    @Test
+    public void query(){
+        ShardingDomain shardingDomain=new ShardingDomain();
+        shardingDomain.setBizId(2);
+        shardingDomain.setContent("123");
+        shardingDomainService.query(shardingDomain);
     }
 }

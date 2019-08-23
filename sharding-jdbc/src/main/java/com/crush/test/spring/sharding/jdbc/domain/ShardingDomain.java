@@ -24,6 +24,8 @@ public class ShardingDomain {
     private Long id;
     @Column(name="biz_id")
     private Integer bizId;
+    @Column(name="group_id")
+    private Integer groupId;
     @Column(name="content")
     private String  content;
 }

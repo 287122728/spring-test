@@ -7,6 +7,9 @@ import com.crush.test.spring.sharding.jdbc.BaseMapper;
 import com.crush.test.spring.sharding.jdbc.domain.ShardingDomain;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  *
@@ -15,4 +18,7 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface ShardingDomainMapper extends BaseMapper<ShardingDomain> {
+    List<ShardingDomain> queryWithOrderBy(ShardingDomain shardingDomain);
+    List<ShardingDomain> queryWithGroupBy(ShardingDomain shardingDomain);
+    List<ShardingDomain> queryWithIn(@Param("shardingDomain")List<ShardingDomain> shardingDomain);
 }

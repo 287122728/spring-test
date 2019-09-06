@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.crush.test.spring.sharding.jdbc.mapper.ShardingDomainMapper">
+    <select id="queryWithOrderBy" resultType="com.crush.test.spring.sharding.jdbc.domain.ShardingDomain">
+        select * from sharding_domain
+        <where>
+            <if test="bizId!=null">
+                and biz_id=#{bizId}
+            </if>
+            <if test="groupId!=null">
+                and group_id=#{groupId}
+            </if>
+        </where>
+        order by biz_id desc
+    </select>
+    <select id="queryWithGroupBy" resultType="com.crush.test.spring.sharding.jdbc.domain.ShardingDomain">
+        select * from sharding_domain
+        <where>
+            <if test="bizId!=null">
+                and biz_id=#{bizId}
+            </if>
+            <if test="groupId!=null">
+                and group_id=#{groupId}
+            </if>
+        </where>
+        group by group_id desc
+    </select>
+    <select id="queryWithIn" resultType="com.crush.test.spring.sharding.jdbc.domain.ShardingDomain">
+        select * from sharding_domain
+        <where>
+            and group_id in
+            <foreach collection="shardingDomain" item="l" open="(" close=")" separator=",">
+                #{l.groupId}
+            </foreach>
+        </where>
+    </select>
+</mapper>

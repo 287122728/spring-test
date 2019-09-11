@@ -25,7 +25,14 @@
         <module>restemplate</module>
         <module>mvc</module>
         <module>sharding-jdbc</module>
+        <module>cache</module>
     </modules>
+    <dependencies>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+    </dependencies>
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -80,7 +87,34 @@
                 <artifactId>sharding-jdbc-spring-boot-starter</artifactId>
                 <version>3.1.0</version>
             </dependency>
-
+            <!-- ehcache -->
+            <dependency>
+                <groupId>net.sf.ehcache</groupId>
+                <artifactId>ehcache</artifactId>
+                <version>2.10.6</version>
+            </dependency>
+            <dependency>
+                <groupId>org.ehcache</groupId>
+                <artifactId>ehcache</artifactId>
+                <version>3.8.0</version>
+            </dependency>
+            <dependency>
+                <groupId>javax.cache</groupId>
+                <artifactId>cache-api</artifactId>
+                <version>1.1.0</version>
+            </dependency>
+            <!-- jmh 基准测试-->
+            <dependency>
+                <groupId>org.openjdk.jmh</groupId>
+                <artifactId>jmh-core</artifactId>
+                <version>1.21</version>
+            </dependency>
+            <dependency>
+                <groupId>org.openjdk.jmh</groupId>
+                <artifactId>jmh-generator-annprocess</artifactId>
+                <version>1.21</version>
+                <scope>provided</scope>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 

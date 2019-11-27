@@ -1,4 +1,4 @@
-package com.crush.test.spring.restemplate;
+package com.crush.test.spring.feign;
 
 
 import org.springframework.web.bind.annotation.RequestBody;
@@ -34,14 +34,11 @@ import lombok.extern.slf4j.Slf4j;
 public class SimpleController {
     @RequestMapping("/get")
     public String get(String name){
-        return name;
-    }
-    @RequestMapping("/get/timeout")
-    public String getTimeOut(String name){
+        //sleep 1s
         try {
-            TimeUnit.MILLISECONDS.sleep(200);
+            TimeUnit.SECONDS.sleep(2);
         } catch ( InterruptedException e ) {
-            log.error("error",e);
+           log.error("error",e);
         }
         return name;
     }

@@ -19,6 +19,11 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -46,6 +51,22 @@ public class TestController extends BaseTest {
         String name="123";
         String url=baseUrl()+"/test/restemplate/get?name="+name;
         ResponseEntity<String> result=testRestTemplate.getForEntity(url,String.class);
+        Assert.assertTrue(result.getBody().equals(name));
+    }
+    @Test
+    public void getForUrlVariable(){
+        String name="123";
+        String url=baseUrl()+"/test/restemplate/get?name={name}";
+        ResponseEntity<String> result=testRestTemplate.getForEntity(url,String.class,name);
+        Assert.assertTrue(result.getBody().equals(name));
+    }
+    @Test
+    public void getForMap(){
+        String name="123";
+        String url=baseUrl()+"/test/restemplate/get?name={name}";
+        Map<String,String> map=new HashMap<>();
+        map.put("name",name);
+        ResponseEntity<String> result=testRestTemplate.getForEntity(url,String.class,map);
         Assert.assertTrue(result.getBody().equals(name));
     }
     @Test
@@ -304,5 +325,48 @@ public class TestController extends BaseTest {
         postFormDomain.setDesc(desc);
 
         //log.info(new XmlMapper().configure(SerializationFeature.WRAP_ROOT_VALUE,true).writeValueAsString(postFormDomain));
+    }
+    @Test
+    public void getTimeout() throws InterruptedException {
+        int tmp=2;
+        int sleepMilliSecond=500;
+        AtomicInteger atomicInteger=new AtomicInteger();
+        Map<Integer,AtomicInteger> map=new ConcurrentHashMap<>();
+
+        ExecutorService threadPoolExecutor= Executors.newFixedThreadPool(tmp);
+        CountDownLatch countDownLatch=new CountDownLatch(tmp);
+        for(int i=0;i<tmp;i++){
+            threadPoolExecutor.execute(() -> {
+                int count=10;
+                while(count>0){
+                    try{
+                        String name="123";
+                        String url="https://oncheckout.keruyun.com//checkout-order-upload-wechat/test/sleep?sleepTime="+sleepMilliSecond;
+                        ResponseEntity<String> result=testRestTemplate.getForEntity(url,String.class);
+                        Integer httpCode=result.getStatusCodeValue();
+                        incrementAndGet(map,httpCode);
+                    }catch(Exception e){
+                        atomicInteger.decrementAndGet();
+                    }
+                    finally {
+                        count--;
+                    }
+
+                }
+                countDownLatch.countDown();
+
+            });
+        }
+        countDownLatch.await();
+        System.out.print("errorCount:"+atomicInteger.get());
+        System.out.println("map:"+map);
+    }
+    private synchronized void incrementAndGet(Map<Integer,AtomicInteger> map,Integer httpCode){
+        if(map.containsKey(httpCode)){
+            map.get(httpCode).incrementAndGet();
+        }else{
+            map.put(httpCode,new AtomicInteger());
+            map.get(httpCode).incrementAndGet();
+        }
     }
 }

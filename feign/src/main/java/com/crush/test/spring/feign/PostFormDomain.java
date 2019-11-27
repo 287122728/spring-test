@@ -1,4 +1,4 @@
-package com.crush.test.spring.restemplate;
+package com.crush.test.spring.feign;
 
 import java.io.Serializable;
 import java.util.Objects;

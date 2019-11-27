@@ -1,6 +1,9 @@
 server:
   port: 8899
-
+  tomcat:
+    accept-count: 1
+    max-threads: 1
+    min-spare-threads: 1
 
 
 

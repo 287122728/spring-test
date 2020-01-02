@@ -1,5 +1,7 @@
-package com.crush.test.spring.feign;
+package com.crush.test.spring.feign.controller;
 
+
+import com.crush.test.spring.feign.domain.PostFormDomain;
 
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,7 +38,7 @@ public class SimpleController {
     public String get(String name){
         //sleep 1s
         try {
-            TimeUnit.SECONDS.sleep(2);
+            TimeUnit.MILLISECONDS.sleep(200);
         } catch ( InterruptedException e ) {
            log.error("error",e);
         }

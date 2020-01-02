@@ -16,6 +16,7 @@ import org.springframework.cloud.netflix.feign.EnableFeignClients;
 @EnableFeignClients(basePackages = "com.crush.test.spring")
 public class SpringFeignTestBootstrap {
     public static void main(String...argc) {
+        System.out.println("test");
         SpringApplication.run(SpringFeignTestBootstrap.class);
     }
 }

@@ -13,6 +13,8 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <properties>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
         <tk.mybatis.version>2.1.2</tk.mybatis.version>
         <lombok.version>1.16.8</lombok.version>
         <commons.io.version>2.4</commons.io.version>
@@ -21,6 +23,8 @@
         <spring-cloud.version>1.1.9.RELEASE</spring-cloud.version>
         <netflex.version>1.2.7.RELEASE</netflex.version>
         <feign.client.version>8.18.0</feign.client.version>
+        <kafka-clients.version>0.10.2.0</kafka-clients.version>
+        <spring-kafka.version>1.1.6.RELEASE</spring-kafka.version>
     </properties>
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
@@ -31,6 +35,8 @@
         <module>sharding-jdbc</module>
         <module>cache</module>
         <module>feign</module>
+        <module>kafka</module>
+        <module>common-bootstrap</module>
     </modules>
     <dependencies>
         <dependency>
@@ -40,11 +46,16 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
+            <!--<scope>test</scope>-->
         </dependency>
     </dependencies>
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>com.crushlee.spring</groupId>
+                <artifactId>common-bootstrap</artifactId>
+                <version>1.0-SNAPSHOT</version>
+            </dependency>
             <dependency>
                 <groupId>tk.mybatis</groupId>
                 <artifactId>mapper-spring-boot-starter</artifactId>
@@ -157,6 +168,23 @@
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-netflix-core</artifactId>
                 <version>1.2.7.RELEASE</version>
+            </dependency>
+            <!-- http client-->
+            <dependency>
+                <groupId>org.apache.httpcomponents</groupId>
+                <artifactId>httpclient</artifactId>
+                <version>4.5.3</version>
+            </dependency>
+            <!-- spring kafka -->
+            <dependency>
+                <groupId>org.apache.kafka</groupId>
+                <artifactId>kafka-clients</artifactId>
+                <version>${kafka-clients.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.kafka</groupId>
+                <artifactId>spring-kafka</artifactId>
+                <version>${spring-kafka.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

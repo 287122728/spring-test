@@ -1,6 +1,9 @@
-package com.crush.test.spring.feign;
+package com.crush.test.spring.feign.config;
 
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.cloud.netflix.feign.DefaultFeignLoggerFactory;
 import org.springframework.cloud.netflix.feign.FeignClientsConfiguration;
+import org.springframework.cloud.netflix.feign.FeignLoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -29,5 +32,10 @@ public class LocalFeignClientsConfiguration extends FeignClientsConfiguration {
     @Bean
     Request.Options feignOptions() {
         return new Request.Options(connectionTimeOut, readTimeOut);
+    }
+    @Bean
+    @ConditionalOnMissingBean({FeignLoggerFactory.class})
+    public FeignLoggerFactory feignLoggerFactory() {
+        return new DefaultFeignLoggerFactory(new FeignLogger());
     }
 }

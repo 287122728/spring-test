@@ -1,7 +1,9 @@
 /**
  * Alipay.com Inc. Copyright (c) 2004-2019 All Rights Reserved.
  */
-package com.crush.test.spring.feign;
+package com.crush.test.spring.feign.caller;
+
+import com.crush.test.spring.feign.config.LocalFeignClientsConfiguration;
 
 import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.web.bind.annotation.RequestMapping;

@@ -25,7 +25,7 @@ public class MyComplexShardingRule implements ComplexKeysShardingAlgorithm {
         //log.info("availableTargetNames:[{}],shardingValues:[{}]", JSONUtils.toJSONString(availableTargetNames),JSONUtils.toJSONString(shardingValues));
         Collection<Integer> bizIds=getShardingValue(shardingValues,"biz_id");
         Collection<Integer> groupIds=getShardingValue(shardingValues,"group_id");
-        Collection<String> list=new HashSet<>();
+        Collection<String> list=new HashSet();
         for (Integer bizId : bizIds) {
             list.add("ds"+bizId%2);
         }
@@ -35,7 +35,7 @@ public class MyComplexShardingRule implements ComplexKeysShardingAlgorithm {
         return list;
     }
     private Collection<Integer> getShardingValue(Collection<ShardingValue> shardingValues, final String key) {
-        Collection<Integer> valueSet = new ArrayList<>();
+        Collection<Integer> valueSet = new ArrayList();
         Iterator<ShardingValue> iterator = shardingValues.iterator();
         while (iterator.hasNext()) {
             ShardingValue next = iterator.next();

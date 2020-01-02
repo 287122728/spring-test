@@ -1,4 +1,4 @@
-package com.crush.test.spring.feign;
+package com.crush.test.spring.feign.domain;
 
 import java.io.Serializable;
 import java.util.Objects;

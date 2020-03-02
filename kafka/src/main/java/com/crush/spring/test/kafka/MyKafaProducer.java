@@ -21,7 +21,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Service
 @Slf4j
-public class KafaProducer<K,V> {
+public class MyKafaProducer<K,V> {
     @Resource
     public KafkaTemplate<String,String> kafkaTemplate;
     @PostConstruct

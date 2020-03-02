@@ -37,6 +37,7 @@
         <module>feign</module>
         <module>kafka</module>
         <module>common-bootstrap</module>
+        <module>load-order</module>
     </modules>
     <dependencies>
         <dependency>
@@ -47,6 +48,11 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <!--<scope>test</scope>-->
+        </dependency>
+        <dependency>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
+            <version>1.2</version>
         </dependency>
     </dependencies>
     <dependencyManagement>

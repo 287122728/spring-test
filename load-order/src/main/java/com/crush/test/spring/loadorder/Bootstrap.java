@@ -1,8 +1,9 @@
-package com.crush.test.spring.mvc;
+package com.crush.test.spring.loadorder;
+
+import com.crush.test.spring.loadorder.component.Printer;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.scheduling.annotation.EnableAsync;
 
 /**
  * <p>
@@ -19,13 +20,12 @@ import org.springframework.scheduling.annotation.EnableAsync;
  * </p>
  *
  * @author crush_lee
- * @date 2019/5/30
+ * @date 2019/4/3
  */
 @SpringBootApplication
-@EnableAsync
-public class SpringMvcTestBootstrap {
+public class Bootstrap {
     public static void main(String...argc){
-        SpringApplication.run(SpringMvcTestBootstrap.class);
+        SpringApplication.run(Bootstrap.class);
+        Printer.print();
     }
-
 }
